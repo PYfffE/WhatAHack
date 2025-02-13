@@ -1,5 +1,5 @@
 
-package com.example.examplemod;
+package org.pyfffe.whatahack;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

