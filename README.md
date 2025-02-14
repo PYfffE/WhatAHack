@@ -1,5 +1,9 @@
+
 ## Description
 Это псевдовредоносный Minecraft мод с декларируемыми пейлоадами, целью которого является демонстрация вредоносной активности под прикрытием мода и повышения осведомленности игроков. Не скачиваете случайные сборки :)  
+
+![minecraft](https://github.com/user-attachments/assets/45707046-8636-4bbd-b61b-bcadfa3b18d2)
+
 
 ## Mod install
 1. Install minecaft 1.7.10 and with Minecraft Forge 10.13.4.1614-1.7.10
